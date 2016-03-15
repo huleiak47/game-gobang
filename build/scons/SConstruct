@@ -18,8 +18,8 @@ LINKFLAGS     = ["" + arg('LINKFLAGS', ""), "", ""]
 
 SRC_SUFFIX    = ".c .cpp .cxx .cc .c++ .rc .def"
 SRC_EXCLUDE   = ["testevaluation.cpp"]      # excluded file names
-INC_PATH      = ['.']   # include paths used for compiler
-SRC_PATH      = ['.']   # source file searching paths, you can use * and ** as search pattern
+INC_PATH      = ['../../src']   # include paths used for compiler
+SRC_PATH      = ['../../src']   # source file searching paths, you can use * and ** as search pattern
 LIB_PATH      = []      # library paths used for linker
 
 arg("GUI", 1)           # GUI or CONSOLE
@@ -245,7 +245,7 @@ for env in [debug_env, release_env]:
     objs = {}
     for sf in sourcefiles:
         if path.splitext(sf)[1].lower() == ".rc":
-            args = path.join(TMP_PATH, env["NAME"], sf + env["OBJSUFFIX"]), sf
+            args = path.join(TMP_PATH, env["NAME"], path.basename(sf) + env["OBJSUFFIX"]), sf
             objs[sf] = env.RES(*args)
         elif path.splitext(sf)[1].lower() == ".def":
             objs[sf] = sf
