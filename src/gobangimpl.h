@@ -47,7 +47,9 @@ private:
     wxBitmap _bmpBG;
     uint8_t _mousex;
     uint8_t _mousey;
+#ifdef _WIN32
     wxIcon _icon;
+#endif
     wxTimer _timer;
     double _elapsed;
 

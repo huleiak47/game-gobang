@@ -19,7 +19,9 @@ GobangDialogImpl::GobangDialogImpl(wxWindow* parent) :
     _bmpBG(),
     _mousex(0xff),
     _mousey(0xff),
+#ifdef _WIN32
     _icon(wxICON(gobangicon)),
+#endif
     _timer(this, 9527),
     _elapsed(0)
 {
@@ -36,8 +38,11 @@ GobangDialogImpl::~GobangDialogImpl()
 
 void GobangDialogImpl::OnInitDialog(wxInitDialogEvent& event)
 {
-    _bmpBG.SetSize(GetSize());
-    SetIcon(_icon);
+    wxSize size = this->GetSize();
+    _bmpBG.SetHeight(size.GetHeight());
+    _bmpBG.SetWidth(size.GetWidth());
+    //_bmpBG.SetSize(GetSize());
+    //SetIcon(_icon);
     _timer.Start(500, true);
 }
 
@@ -113,7 +118,7 @@ void GobangDialogImpl::OnPaint(wxPaintEvent& event)
         dc.DrawRectangle((_mousex + 1) * 30 - 10, (_mousey + 1) * 30 - 10, 20, 20);
     }
 
-    wxString s = wxString::Format(wxT("使用时间：%.3f 秒"), _elapsed);
+    wxString s = wxString::Format(wxT("Elapsed: %.3f sec"), _elapsed);
     dc.DrawText(s, wxPoint(1, 1));
 }
 
@@ -179,13 +184,13 @@ void GobangDialogImpl::game_over(int8_t ret)
     switch (ret)
     {
     case gobangai::BLACK_WIN:
-        msg = wxT("黑胜");
+        msg = wxT("Black Win!");
         break;
     case gobangai::PEACE:
-        msg = wxT("和棋");
+        msg = wxT("Draw!");
         break;
     case gobangai::WHITE_WIN:
-        msg = wxT("白胜");
+        msg = wxT("White Win!");
         break;
     default:
         assert(0);

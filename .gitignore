@@ -29,3 +29,7 @@ obj/
 *.exe
 *.out
 *.app
+*.pyc
+
+# ycm
+.ycm_extra_conf.py
