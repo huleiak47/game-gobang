@@ -334,11 +334,13 @@ import ycm_core
 flags = [
     '-Wall',
     '-Wextra',
-    '-Werror',
     '-fexceptions',
     '-DNDEBUG',"""
         for DEF in debug_env["CPPDEFINES"]:
             printflag("-D{}".format(DEF))
+        for INC in os.environ.get("INCLUDE", "").split(";"):
+            printflag("-isystem")
+            printflag(INC.replace("\\", "/"))
         for INC in INC_PATH:
             printflag("-I")
             printflag(os.path.relpath(os.path.abspath(INC), start=YCMPATH))
